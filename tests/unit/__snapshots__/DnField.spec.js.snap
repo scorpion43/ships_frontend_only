@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DnField should has backgrond white before click, after click yellow and after 800ms white back 1`] = `
+<div
+  class="dn-field"
+/>
+`;
+
+exports[`DnField should has backgrond white before click, after click yellow and after 800ms white back 2`] = `
+<div
+  class="dn-field just-clicked"
+/>
+`;
+
+exports[`DnField should has backgrond white before click, after click yellow and after 800ms white back 3`] = `
+<div
+  class="dn-field"
+/>
+`;

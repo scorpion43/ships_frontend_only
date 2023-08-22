@@ -1,4 +1,5 @@
 import { Directions } from "@/constants"
+import FieldGenerator from "./FieldGenerator"
 
 class ShipDirectionChecker {
     constructor(boardSize) {
@@ -32,55 +33,13 @@ class ShipDirectionChecker {
 
     checkDirectionsForOtherShips(directions, shipSize, cordinates) {
 		const allowedDirections = []
+		// increase size to avoid random ship's position to close to another
 		shipSize++
 		directions.forEach((direction) => {
-			if (direction === Directions.UP) {
-				let allowed = true
-				for (let y = cordinates.y; y  > cordinates.y - shipSize; y--) {
-					if (this.coveredFields.some(c => c.y === y && c.x === cordinates.x)) {
-						allowed = false
-						break
-					}
-				}
-				if (allowed) {
-					allowedDirections.push(Directions.UP)
-				}
-			}
-			else if (direction === Directions.RIGHT) {
-				let allowed = true
-				for (let x = cordinates.x; x < cordinates.x + shipSize; x++) {
-					if (this.coveredFields.some(c => c.y === cordinates.y && c.x === x)) {
-						allowed = false
-						break
-					}
-				}
-				if (allowed) {
-					allowedDirections.push(Directions.RIGHT)
-				}
-			}
-			else if (direction === Directions.DOWN) {
-				let allowed = true
-				for (let y = cordinates.y; y < cordinates.y + shipSize; y++) {
-					if (this.coveredFields.some(c => c.y === y && c.x === cordinates.x)) {
-						allowed = false
-						break
-					}
-				}
-				if (allowed) {
-					allowedDirections.push(Directions.DOWN)
-				}
-			}
-			else if (direction === Directions.LEFT) {
-				let allowed = true
-				for (let x = cordinates.x; x > cordinates.x - shipSize; x--) {
-					if (this.coveredFields.some(c => c.x === x && c.y === cordinates.y)) {
-						allowed = false
-						break
-					}
-				}
-				if (allowed) {
-					allowedDirections.push(Directions.LEFT)	
-				}
+			const fieldsToCheck = FieldGenerator[`getFieldsFor${direction}`](cordinates, shipSize)
+			const allowed = fieldsToCheck.every(field => this.coveredFields.every(covered => field.x !== covered.x || field.y !== covered.y))
+			if (allowed) {
+				allowedDirections.push(Directions[direction])
 			}
 		})
 		return allowedDirections

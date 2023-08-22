@@ -3,7 +3,7 @@ const Directions = {
     UP:"UP", 
     RIGHT: "RIGHT",
     DOWN: "DOWN", 
-    LEFT: "lEFT" 
+    LEFT: "LEFT" 
 }
 
 export { alphabet, Directions }

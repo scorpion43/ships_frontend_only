@@ -1,5 +1,5 @@
 class FieldGenerator {
-    static getFieldsForUp(start, size) {
+    static getFieldsForUP(start, size) {
         const fields = []
         for (let y = start.y; y  > start.y - size; y--) {
             const field = {
@@ -11,7 +11,7 @@ class FieldGenerator {
         return fields
     }
 
-    static getFieldsForRight(start, size) {
+    static getFieldsForRIGHT(start, size) {
         const fields = []
         for (let x = start.x; x < start.x + size; x++) {
             const field = {
@@ -23,7 +23,7 @@ class FieldGenerator {
         return fields
     }
 
-    static getFieldsForDown(start, size) {
+    static getFieldsForDOWN(start, size) {
         const fields = []
         for (let y = start.y; y < start.y + size; y++) {
             const field = {
@@ -35,7 +35,7 @@ class FieldGenerator {
         return fields
     }
 
-    static getFieldsForLeft(start, size) {
+    static getFieldsForLEFT(start, size) {
         const fields = []
         for (let x = start.x; x > start.x - size; x--) {
             const field = {

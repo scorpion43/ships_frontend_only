@@ -2,9 +2,9 @@ import { Directions } from "@/constants"
 import FieldGenerator from "./FieldGenerator"
 
 class ShipDirectionChecker {
-    constructor(boardSize) {
+    constructor(boardSize, coveredFields = []) {
         this.boardSize = boardSize
-        this.coveredFields = []
+        this.coveredFields = coveredFields
     }
 
     getAllowedDirections(cordinates, shipSize) {

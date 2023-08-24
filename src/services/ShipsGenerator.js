@@ -34,11 +34,11 @@ class ShipGenerator {
 	getFinalDirection(shipSize) {
 		let coordinates = null
 		let allowedDirections = []
-		const ShipDirectionChecker = new ShipDirectionChecker(this.boardSize)
+		const shipDirectionChecker = new ShipDirectionChecker(this.boardSize, this.coveredFields)
 		while (allowedDirections.length === 0) {
 			coordinates = this.randomCoordinates()
-			allowedDirections = this.getAllowedDirections(coordinates, shipSize)
-
+			allowedDirections = shipDirectionChecker.getAllowedDirections(coordinates, shipSize)
+			allowedDirections = shipDirectionChecker.checkDirectionsForOtherShips()
 		}
 
 		let index = 0

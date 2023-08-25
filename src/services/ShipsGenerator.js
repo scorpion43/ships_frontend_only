@@ -6,7 +6,7 @@ class ShipGenerator {
 	constructor (boardSize) {
 		this.boardSize = boardSize
 		this.shipsPreRequirements = {
-			countBySize: {
+			countToSize: {
 				1: 4,
 				2: 3,
 				3: 2,
@@ -18,8 +18,8 @@ class ShipGenerator {
 
 	generateShips() {
 		const ships = []
-		for (const count in this.shipsPreRequirements.countBySize) {
-			const size = this.shipsPreRquierments.countBySize[count]
+		for (const count in this.shipsPreRequirements.countToSize) {
+			const size = this.shipsPreRquierments.countToSize[count]
 			for (let i = 0; i < count; i++) {
 				const direction = this.getFinalDirection(size)
 				const fields = FieldGenerator[`getFieldsFor${direction}`]

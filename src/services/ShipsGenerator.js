@@ -3,7 +3,7 @@ import FieldGenerator from "./FieldGenerator"
 import ShipDirectionChecker from "./ShipDirectionChecker"
 
 class ShipGenerator {
-	constructor (boardSize) {
+	constructor (boardSize, coveredFields = []) {
 		this.boardSize = boardSize
 		this.shipsPreRequirements = {
 			countToSize: {
@@ -13,7 +13,7 @@ class ShipGenerator {
 				4: 1,
 			}
 		}
-		this.coveredFields = []
+		this.coveredFields = coveredFields
 	}
 
 	generateShips() {
@@ -32,17 +32,17 @@ class ShipGenerator {
 	}
 
 	getFinalDirection(shipSize) {
-		let coordinates = null
 		let allowedDirections = []
 		const shipDirectionChecker = new ShipDirectionChecker(this.boardSize, this.coveredFields)
 		while (allowedDirections.length === 0) {
-			coordinates = this.randomCoordinates()
+			const coordinates = this.randomCoordinates()
 			allowedDirections = shipDirectionChecker.getAllowedDirections(coordinates, shipSize)
-			allowedDirections = shipDirectionChecker.checkDirectionsForOtherShips()
+			console.log(allowedDirections)
+			allowedDirections = shipDirectionChecker.checkDirectionsForOtherShips(allowedDirections, shipSize, coordinates)
 		}
 
 		let index = 0
-		index = Math.random() * (allowedDirections - 0) + 1
+		index = parseInt(Math.random() * (allowedDirections.length - 0) + 1)
 
 		return allowedDirections[index]
 	}

@@ -1,3 +1,4 @@
+import { Directions } from "@/constants"
 import ShipGenerator from "@/services/ShipsGenerator"
 
 const generateFields= (size, except = []) => {
@@ -35,7 +36,27 @@ describe("ShipsGenerator", () => {
     })
 
     describe('getFinalDirection', () => {
-        it.only('should return ship with ')
+        it('should return ship with ', () => {
+            const boardSize = 10
+            const shipSize = 1
+            const openFields = [ {x: 0, y: 1} ]
+            const coveredFields = generateFields(boardSize, openFields)
+
+            const shipGenerator = new ShipGenerator(boardSize, coveredFields)
+            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+            expect(Object.values(Directions).includes(finalDirection)).toBe(true)
+        })
+        
+        it.only('should return ship with ', () => {
+            const boardSize = 10
+            const shipSize = 2
+            const openFields = [ {x: 0, y: 1}, {x: 1, y: 1} ]
+            const coveredFields = generateFields(boardSize, openFields)
+
+            const shipGenerator = new ShipGenerator(boardSize, coveredFields)
+            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+            expect(finalDirection).toBe(Directions.RIGHT)
+        })
     })
 
     

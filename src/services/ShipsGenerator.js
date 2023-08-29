@@ -42,15 +42,17 @@ class ShipGenerator {
 
 		let index = 0
 		if (allowedDirections.length > 1) {
-			index = parseInt(Math.random() * (allowedDirections.length - 0) + 1)
+			index = Math.floor(Math.random() * allowedDirections.length)
 		}
+		console.log('index', index)
+		console.log(allowedDirections.length)
 
 		return allowedDirections[index]
 	}
 
 	randomCoordinates() {
-		const x = parseInt(Math.random() * (this.boardSize - 0) + 0)
-		const y = parseInt(Math.random() * (this.boardSize - 1) + 1)
+		const x =  Math.floor(Math.random() * this.boardSize)
+		const y =  Math.floor(Math.random() * (this.boardSize - 1) + 1)
 
 		return {
 			x,

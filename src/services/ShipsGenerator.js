@@ -37,12 +37,13 @@ class ShipGenerator {
 		while (allowedDirections.length === 0) {
 			const coordinates = this.randomCoordinates()
 			allowedDirections = shipDirectionChecker.getAllowedDirections(coordinates, shipSize)
-			console.log(allowedDirections)
 			allowedDirections = shipDirectionChecker.checkDirectionsForOtherShips(allowedDirections, shipSize, coordinates)
 		}
 
 		let index = 0
-		index = parseInt(Math.random() * (allowedDirections.length - 0) + 1)
+		if (allowedDirections.length > 1) {
+			index = parseInt(Math.random() * (allowedDirections.length - 0) + 1)
+		}
 
 		return allowedDirections[index]
 	}

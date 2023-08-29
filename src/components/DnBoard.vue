@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     prepareCordinates(w, h) {
-      console.log(`${alphabet[w-1]}${h}`)
       return `${alphabet[w-1]}${h}`
     }
   },

@@ -36,7 +36,7 @@ describe("ShipsGenerator", () => {
     })
 
     describe('getFinalDirection', () => {
-        it('should return ship with ', () => {
+        it('should return proper direction', () => {
             const boardSize = 10
             const shipSize = 1
             const openFields = [ {x: 0, y: 1} ]
@@ -47,14 +47,18 @@ describe("ShipsGenerator", () => {
             expect(Object.values(Directions).includes(finalDirection)).toBe(true)
         })
         
-        it.only('should return ship with ', () => {
+        it('should return direction RIGHT for start field { x: 0, y: 1 } and free fields on board:  [ {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1} ]', () => {
             const boardSize = 10
             const shipSize = 2
-            const openFields = [ {x: 0, y: 1}, {x: 1, y: 1} ]
+            const openFields = [ {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1} ]
             const coveredFields = generateFields(boardSize, openFields)
 
             const shipGenerator = new ShipGenerator(boardSize, coveredFields)
+            const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
+            randomCoordinatesMock.mockReturnValue({ x: 0, y: 1 });
+
             const finalDirection = shipGenerator.getFinalDirection(shipSize)
+
             expect(finalDirection).toBe(Directions.RIGHT)
         })
     })

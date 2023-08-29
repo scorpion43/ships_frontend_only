@@ -22,7 +22,7 @@ const generateFields= (size, except = []) => {
 }
 
 describe("ShipsGenerator", () => {
-    it.only("should random Coordinates 100 times in range of board size", () => {
+    it("should random Coordinates 100 times in range of board size", () => {
         const size = 7
         const shipGenerator = new ShipGenerator(size)
 
@@ -58,11 +58,65 @@ describe("ShipsGenerator", () => {
 
             const shipGenerator = new ShipGenerator(boardSize, coveredFields)
             const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
-            randomCoordinatesMock.mockReturnValue({ x: 0, y: 1 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 9, y: 10 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 0, y: 10 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 1 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 0, y: 1 });
 
             const finalDirection = shipGenerator.getFinalDirection(shipSize)
 
             expect(finalDirection).toBe(Directions.RIGHT)
+        })
+
+        it('should return direction UP for start field { x: 5, y: 5 } ship size equals 2 and free fields on board:  [ {x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 3} ]', () => {
+            const boardSize = 10
+            const shipSize = 2
+            const openFields = [ {x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 3}]
+            const coveredFields = generateFields(boardSize, openFields)
+
+            const shipGenerator = new ShipGenerator(boardSize, coveredFields)
+            const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
+            randomCoordinatesMock.mockReturnValueOnce({ x: 9, y: 10 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 0, y: 10 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 1 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 5, y: 5 });
+
+            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+
+            expect(finalDirection).toBe(Directions.UP)
+        })
+
+        it('should return direction DOWN for start field { x: 5, y: 5 } ship size equals 2 and free fields on board:  [ {x: 5, y: 5}, {x: 5, y: 6}, {x: 5, y: 7} ]', () => {
+            const boardSize = 10
+            const shipSize = 2
+            const openFields = [ {x: 5, y: 5}, {x: 5, y: 6}, {x: 5, y: 7} ]
+            const coveredFields = generateFields(boardSize, openFields)
+
+            const shipGenerator = new ShipGenerator(boardSize, coveredFields)
+            const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
+            randomCoordinatesMock.mockReturnValueOnce({ x: 5, y: 5 });
+
+            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+
+            expect(finalDirection).toBe(Directions.DOWN)
+        })
+
+        it('should return direction LEFT for start field { x: 5, y: 5 } ship size equals 2 and free fields on board:  [ {x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5} ]', () => {
+            const boardSize = 10
+            const shipSize = 2
+            const openFields = [ {x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5} ]
+            const coveredFields = generateFields(boardSize, openFields)
+
+            const shipGenerator = new ShipGenerator(boardSize, coveredFields)
+            const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
+            randomCoordinatesMock.mockReturnValueOnce({ x: 9, y: 10 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 0, y: 10 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 1 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 5, y: 5 });
+
+            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+
+            expect(finalDirection).toBe(Directions.LEFT)
         })
     })
 

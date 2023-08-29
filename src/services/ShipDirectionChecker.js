@@ -37,7 +37,7 @@ class ShipDirectionChecker {
 		shipSize++
 		directions.forEach((direction) => {
 			const fieldsToCheck = FieldGenerator[`getFieldsFor${direction}`](cordinates, shipSize)
-			const allowed = fieldsToCheck.every(field => !this.coveredFields.some(covered => field.x === covered.x && field.y === covered.y))
+			const allowed = fieldsToCheck.every(field => this.coveredFields.every(covered => field.x !== covered.x || field.y !== covered.y))
 			if (allowed) {
 				allowedDirections.push(Directions[direction])
 			}

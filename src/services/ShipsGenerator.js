@@ -19,10 +19,10 @@ class ShipGenerator {
 	generateShips() {
 		const ships = []
 		for (const count in this.shipsPreRequirements.countToSize) {
-			const size = this.shipsPreRquierments.countToSize[count]
+			const size = this.shipsPreRequirements.countToSize[count]
 			for (let i = 0; i < count; i++) {
-				const direction = this.getFinalDirection(size)
-				const fields = FieldGenerator[`getFieldsFor${direction}`]
+				const { direction, coordinates } = this.getDirectionWithCoordinates(size)
+				const fields = FieldGenerator[`getFieldsFor${direction}`](coordinates, size)
 				const ship = new Ship(fields)
 				ships.push(ship)
 				this.coveredFields = [...this.coveredFields, ...fields]
@@ -31,11 +31,12 @@ class ShipGenerator {
 		return ships
 	}
 
-	getFinalDirection(shipSize) {
+	getDirectionWithCoordinates(shipSize) {
 		let allowedDirections = []
 		const shipDirectionChecker = new ShipDirectionChecker(this.boardSize, this.coveredFields)
+		let coordinates = {}
 		while (allowedDirections.length === 0) {
-			const coordinates = this.randomCoordinates()
+			coordinates = this.randomCoordinates()
 			allowedDirections = shipDirectionChecker.getAllowedDirections(coordinates, shipSize)
 			allowedDirections = shipDirectionChecker.checkDirectionsForOtherShips(allowedDirections, shipSize, coordinates)
 		}
@@ -45,7 +46,10 @@ class ShipGenerator {
 			index = Math.floor(Math.random() * allowedDirections.length)
 		}
 
-		return allowedDirections[index]
+		return {
+			direction: allowedDirections[index],
+			coordinates: coordinates
+		}
 	}
 
 	randomCoordinates() {

@@ -35,7 +35,7 @@ describe("ShipsGenerator", () => {
         }
     })
 
-    describe('getFinalDirection', () => {
+    describe('getDirectionWithCoordinates', () => {
         it('should return proper direction for start field (x: 0, y: 1) and ship size equals 1 and free fields on board { x: 0, y: 1 }', () => {
             const boardSize = 10
             const shipSize = 1
@@ -46,8 +46,8 @@ describe("ShipsGenerator", () => {
             const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
             randomCoordinatesMock.mockReturnValue({ x: 0, y: 1 });
 
-            const finalDirection = shipGenerator.getFinalDirection(shipSize)
-            expect(Object.values(Directions).includes(finalDirection)).toBe(true)
+            const finalDirection = shipGenerator.getDirectionWithCoordinates(shipSize)
+            expect(Object.values(Directions).includes(finalDirection.direction)).toBe(true)
         })
         
         it('should return direction RIGHT for start field { x: 0, y: 1 } ship size equals 2 and free fields on board:  [ {x: 0, y: 1}, {x: 1, y: 1}, {x: 2, y: 1} ]', () => {
@@ -63,9 +63,9 @@ describe("ShipsGenerator", () => {
             randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 1 });
             randomCoordinatesMock.mockReturnValueOnce({ x: 0, y: 1 });
 
-            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+            const finalDirection = shipGenerator.getDirectionWithCoordinates(shipSize)
 
-            expect(finalDirection).toBe(Directions.RIGHT)
+            expect(finalDirection.direction).toBe(Directions.RIGHT)
         })
 
         it('should return direction UP for start field { x: 5, y: 5 } ship size equals 2 and free fields on board:  [ {x: 5, y: 5}, {x: 5, y: 4}, {x: 5, y: 3} ]', () => {
@@ -81,9 +81,9 @@ describe("ShipsGenerator", () => {
             randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 1 });
             randomCoordinatesMock.mockReturnValueOnce({ x: 5, y: 5 });
 
-            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+            const finalDirection = shipGenerator.getDirectionWithCoordinates(shipSize)
 
-            expect(finalDirection).toBe(Directions.UP)
+            expect(finalDirection.direction).toBe(Directions.UP)
         })
 
         it('should return direction DOWN for start field { x: 5, y: 5 } ship size equals 2 and free fields on board:  [ {x: 5, y: 5}, {x: 5, y: 6}, {x: 5, y: 7} ]', () => {
@@ -96,9 +96,9 @@ describe("ShipsGenerator", () => {
             const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
             randomCoordinatesMock.mockReturnValueOnce({ x: 5, y: 5 });
 
-            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+            const finalDirection = shipGenerator.getDirectionWithCoordinates(shipSize)
 
-            expect(finalDirection).toBe(Directions.DOWN)
+            expect(finalDirection.direction).toBe(Directions.DOWN)
         })
 
         it('should return direction LEFT for start field { x: 5, y: 5 } ship size equals 2 and free fields on board:  [ {x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5} ]', () => {
@@ -114,11 +114,41 @@ describe("ShipsGenerator", () => {
             randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 1 });
             randomCoordinatesMock.mockReturnValueOnce({ x: 5, y: 5 });
 
-            const finalDirection = shipGenerator.getFinalDirection(shipSize)
+            const finalDirection = shipGenerator.getDirectionWithCoordinates(shipSize)
 
-            expect(finalDirection).toBe(Directions.LEFT)
+            expect(finalDirection.direction).toBe(Directions.LEFT)
         })
     })
 
-    
+    describe('generateShips', () => {
+        it('some test', () => {
+            const size = 10
+            const shipGenerator = new ShipGenerator(size)
+
+            const randomCoordinatesMock = jest.spyOn(shipGenerator, 'randomCoordinates')
+            const getDirectionWithCoordinatesMock = jest.spyOn(shipGenerator, 'getDirectionWithCoordinates')
+
+            randomCoordinatesMock.mockReturnValueOnce({ x: 8, y: 9 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 8, y: 4 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 4, y: 7 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 1, y: 9 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 3, y: 4 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 6, y: 3 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 6, y: 9 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 1, y: 7 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 1, y: 5 });
+            randomCoordinatesMock.mockReturnValueOnce({ x: 1, y: 2 });
+
+            getDirectionWithCoordinatesMock.mockReturnValueOnce({ direction: Directions.UP, coordinates: { x: 8, y: 9 } });
+            getDirectionWithCoordinatesMock.mockReturnValueOnce({ direction: Directions.UP, coordinates: { x: 8, y: 4 } });
+            getDirectionWithCoordinatesMock.mockReturnValueOnce({ direction: Directions.RIGHT, coordinates: { x: 4, y: 7 } });
+            getDirectionWithCoordinatesMock.mockReturnValueOnce({ direction: Directions.RIGHT, coordinates: { x: 1, y: 9 } });
+            getDirectionWithCoordinatesMock.mockReturnValueOnce({ direction: Directions.DOWN, coordinates: { x: 3, y: 4 } });
+            getDirectionWithCoordinatesMock.mockReturnValueOnce({ direction: Directions.UP, coordinates: { x: 6, y: 3 }});
+
+            const ships = shipGenerator.generateShips()
+
+            console.log(JSON.stringify(ships))
+        })
+    })
 })

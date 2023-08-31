@@ -66,7 +66,17 @@ describe("utils.js", () => {
         ]))
     })
 
-    it.only("should return proper borderPoints for: [ {x: 6, y: 2}, {x: 6, y: 3} ]", () => {
+    it("should return proper borderPoints for: [ {x: 6, y: 2} ]", () => {
+        const fields  = [ {x: 6, y: 2} ]
+        const borderPoints = getBorderCoordinates(fields)
+        expect(borderPoints).toEqual(expect.arrayContaining([
+            {x: 5, y: 1}, {x: 6, y: 1}, {x: 7, y: 1}, 
+            {x: 5, y: 2}, {x: 7, y: 2},
+            {x: 5, y: 3}, {x: 6, y: 3}, {x: 7, y: 3}
+        ]))
+    })
+    
+    it("should return proper borderPoints for: [ {x: 6, y: 2}, {x: 6, y: 3} ]", () => {
         const fields  = [ {x: 6, y: 2}, {x: 6, y: 3} ]
         const borderPoints = getBorderCoordinates(fields)
         expect(borderPoints).toEqual(expect.arrayContaining([
@@ -77,14 +87,27 @@ describe("utils.js", () => {
         ]))
     })
     
-    it.skip("should return proper borderPoints for: [ {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}, {x: 0, y: 4}, {x: 0, y: 5} ]", () => {
-        const fields  = [ {x: 6, y: 2}, {x: 6, y: 3} ]
+    it("should return proper borderPoints for: [ {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}, {x: 0, y: 4}, {x: 0, y: 5} ]", () => {
+        const fields  = [ {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}, {x: 0, y: 4}, {x: 0, y: 5} ]
         const borderPoints = getBorderCoordinates(fields)
         expect(borderPoints).toEqual(expect.arrayContaining([
-            {x: 5, y: 1}, {x: 6, y: 1}, {x: 7, y: 1}, 
-            {x: 5, y: 2}, {x: 7, y: 2},
-            {x: 5, y: 3}, {x: 7, y: 3},
-            {x: 5, y: 4}, {x: 6, y: 4}, {x: 7, y: 4},
+            {x: -1, y: 0}, {x: 0, y: 0}, {x: 1, y: 0},
+            {x: -1, y: 1}, {x: 1, y: 1},
+            {x: -1, y: 2}, {x: 1, y: 2},
+            {x: -1, y: 3}, {x: 1, y: 3},
+            {x: -1, y: 4}, {x: 1, y: 4},
+            {x: -1, y: 5}, {x: 1, y: 5},
+            {x: -1, y: 6}, {x: 0, y: 6}, {x: 1, y: 6}
+        ]))
+    })
+
+    it("should return proper borderPoints for: [ {x: 0, y: 10}, {x: 1, y: 10}, {x: 2, y: 10}, {x: 3, y: 10}, {x: 4, y: 10}, {x: 5, y: 10} ]", () => {
+        const fields  = [ {x: 0, y: 10}, {x: 1, y: 10}, {x: 2, y: 10}, {x: 3, y: 10}, {x: 4, y: 10}, {x: 5, y: 10} ]
+        const borderPoints = getBorderCoordinates(fields)
+        expect(borderPoints).toEqual(expect.arrayContaining([
+            {x: -1, y: 9}, {x: 0, y: 9}, {x: 1, y: 9}, {x: 2, y: 9}, {x: 3, y: 9}, {x: 4, y: 9}, {x: 5, y: 9}, {x: 6, y: 9},
+            {x: -1, y: 10}, {x: 6, y: 10},
+            {x: -1, y: 11}, {x: 0, y: 11}, {x: 1, y: 11}, {x: 2, y: 11}, {x: 3, y: 11}, {x: 4, y: 11}, {x: 5, y: 11}, {x: 6, y: 11}
         ]))
     })
 })

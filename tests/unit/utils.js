@@ -13,8 +13,16 @@ const checkIsInRangeOfBoundaries = (coordinates, boardSize) => {
             max: boardSize
         }
     }
-    
+
     return isOnBoard(coordinates.x, boundaries.x) && isOnBoard(coordinates.y, boundaries.y)
 }
 
-export { checkIsInRangeOfBoundaries }
+const mergeFields = (ships) => {
+    let fields = []
+    ships.forEach(ship => {
+        fields = fields.concat(ship.fields)
+    })
+    return fields
+}
+
+export { checkIsInRangeOfBoundaries, mergeFields }

@@ -1,8 +1,9 @@
 import FieldGenerator from "@/services/FieldGenerator"
-import { checkIsInRangeOfBoundaries } from "./utils"
+import { checkIsInRangeOfBoundaries, mergeFields } from "./utils"
+import Ship from "@/models/Ship"
 
 describe("utils.js", () => {
-    it.only("should return true when points are in range for  boundaries of board", () => {
+    it("should return true when points are in range for  boundaries of board", () => {
         const boardSize = 10
         FieldGenerator.getFieldsForRIGHT({x: 0, y: 1}, boardSize).forEach(coordinates => {
             expect(checkIsInRangeOfBoundaries(coordinates, boardSize)).toBe(true)
@@ -20,7 +21,7 @@ describe("utils.js", () => {
         expect(checkIsInRangeOfBoundaries({x: 5, y: 5}, boardSize)).toBe(true)
     })
 
-    it.only("should return false when points are not in range for boundaries of board", () => {
+    it("should return false when points are not in range for boundaries of board", () => {
         const boardSize = 10
         FieldGenerator.getFieldsForRIGHT({x: 0, y: 0}, boardSize).forEach(coordinates => {
             expect(checkIsInRangeOfBoundaries(coordinates, boardSize)).toBe(false)
@@ -34,5 +35,34 @@ describe("utils.js", () => {
         FieldGenerator.getFieldsForUP({x: -1, y: 10}, boardSize - 1).forEach(coordinates => {
             expect(checkIsInRangeOfBoundaries(coordinates, boardSize)).toBe(false)
         })
+    })
+    
+    it("should return all fields in one array from all ships", () => {
+        const ships = []
+        ships.push(new Ship([{ x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 }]))
+        ships.push(new Ship([{ x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 }]))
+        ships.push(new Ship([{ x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 }]))
+        ships.push(new Ship([{ x: 1, y: 9 }, { x: 2, y: 9 }]))
+        ships.push(new Ship([{ x: 3, y: 4 }, { x: 3, y: 5 }]))
+        ships.push(new Ship([{ x: 6, y: 3 }, { x: 6, y: 2 }]))
+        ships.push(new Ship([{ x: 6, y: 9 }]))
+        ships.push(new Ship([{ x: 1, y: 7 }]))
+        ships.push(new Ship([{ x: 1, y: 5 }]))
+        ships.push(new Ship([{ x: 1, y: 2 }]))
+
+        const fields = mergeFields(ships)
+
+        expect(fields).toEqual(expect.arrayContaining([
+            { x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 },
+            { x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 },
+            { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 },
+            { x: 1, y: 9 }, { x: 2, y: 9 },
+            { x: 3, y: 4 }, { x: 3, y: 5 },
+            { x: 6, y: 3 }, { x: 6, y: 2 },
+            { x: 6, y: 9 },
+            { x: 1, y: 7 },
+            { x: 1, y: 5 },
+            { x: 1, y: 2 },
+        ]))
     })
 })

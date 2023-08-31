@@ -1,5 +1,6 @@
 import { Directions } from "@/constants"
 import ShipGenerator from "@/services/ShipsGenerator"
+import { checkShipsAreProperlyGenerated, mergeFields } from "../utils"
 
 const generateFields= (size, except = []) => {
     const allFields = []
@@ -180,6 +181,21 @@ describe("ShipsGenerator", () => {
             expect(ships[9].fields).toEqual(expect.arrayContaining([
                 { x: 1, y: 2 }
             ]))
+        })
+
+        it('brute force tests for generateShips (1000 tries)', () => {
+            let previousShips = null
+            for (let i = 0; i <= 1000; i++) {
+                const shipGenerator = new ShipGenerator(10)
+                const ships = shipGenerator.generateShips()
+                const result = checkShipsAreProperlyGenerated(ships)
+                if (previousShips) {
+                    const allFields = mergeFields(ships)
+                    const previousAllFields = mergeFields(previousShips)
+                    expect(allFields).not.toEqual(expect.arrayContaining(previousAllFields))
+                }
+                expect(result).toEqual(true)
+            }
         })
     })
 })

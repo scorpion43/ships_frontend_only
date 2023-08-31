@@ -63,7 +63,6 @@ const checkShipsAreProperlyGenerated = (ships, boardSize) => {
                 return test
             }
         })
-
     }
 
     return isOk

@@ -121,7 +121,7 @@ describe("ShipsGenerator", () => {
     })
 
     describe('generateShips', () => {
-        it('some test', () => {
+        it('should ships array contains proper ships definition for mocked functions', () => {
             const size = 10
             const shipGenerator = new ShipGenerator(size)
 
@@ -148,7 +148,38 @@ describe("ShipsGenerator", () => {
 
             const ships = shipGenerator.generateShips()
 
-            console.log(JSON.stringify(ships))
+            expect(ships.length).toBe(10)
+
+            expect(ships[0].fields).toEqual(expect.arrayContaining([
+                { x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 }
+            ]))
+            expect(ships[1].fields).toEqual(expect.arrayContaining([
+                { x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 }
+            ]))
+            expect(ships[2].fields).toEqual(expect.arrayContaining([
+                { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 }
+            ]))
+            expect(ships[3].fields).toEqual(expect.arrayContaining([
+                { x: 1, y: 9 }, { x: 2, y: 9 }
+            ]))
+            expect(ships[4].fields).toEqual(expect.arrayContaining([
+                { x: 3, y: 4 }, { x: 3, y: 5 }
+            ]))
+            expect(ships[5].fields).toEqual(expect.arrayContaining([
+                { x: 6, y: 3 }, { x: 6, y: 2 }
+            ]))
+            expect(ships[6].fields).toEqual(expect.arrayContaining([
+                { x: 6, y: 9 }
+            ]))
+            expect(ships[7].fields).toEqual(expect.arrayContaining([
+                { x: 1, y: 7 }
+            ]))
+            expect(ships[8].fields).toEqual(expect.arrayContaining([
+                { x: 1, y: 5 }
+            ]))
+            expect(ships[9].fields).toEqual(expect.arrayContaining([
+                { x: 1, y: 2 }
+            ]))
         })
     })
 })

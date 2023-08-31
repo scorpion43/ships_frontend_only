@@ -1,5 +1,5 @@
 import FieldGenerator from "@/services/FieldGenerator"
-import { checkIsInRangeOfBoundaries, mergeFields } from "./utils"
+import { checkIsInRangeOfBoundaries, getBorderCoordinates, mergeFields } from "./utils"
 import Ship from "@/models/Ship"
 
 describe("utils.js", () => {
@@ -63,6 +63,28 @@ describe("utils.js", () => {
             { x: 1, y: 7 },
             { x: 1, y: 5 },
             { x: 1, y: 2 },
+        ]))
+    })
+
+    it.only("should return proper borderPoints for: [ {x: 6, y: 2}, {x: 6, y: 3} ]", () => {
+        const fields  = [ {x: 6, y: 2}, {x: 6, y: 3} ]
+        const borderPoints = getBorderCoordinates(fields)
+        expect(borderPoints).toEqual(expect.arrayContaining([
+            {x: 5, y: 1}, {x: 6, y: 1}, {x: 7, y: 1}, 
+            {x: 5, y: 2}, {x: 7, y: 2},
+            {x: 5, y: 3}, {x: 7, y: 3},
+            {x: 5, y: 4}, {x: 6, y: 4}, {x: 7, y: 4},
+        ]))
+    })
+    
+    it.skip("should return proper borderPoints for: [ {x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}, {x: 0, y: 4}, {x: 0, y: 5} ]", () => {
+        const fields  = [ {x: 6, y: 2}, {x: 6, y: 3} ]
+        const borderPoints = getBorderCoordinates(fields)
+        expect(borderPoints).toEqual(expect.arrayContaining([
+            {x: 5, y: 1}, {x: 6, y: 1}, {x: 7, y: 1}, 
+            {x: 5, y: 2}, {x: 7, y: 2},
+            {x: 5, y: 3}, {x: 7, y: 3},
+            {x: 5, y: 4}, {x: 6, y: 4}, {x: 7, y: 4},
         ]))
     })
 })

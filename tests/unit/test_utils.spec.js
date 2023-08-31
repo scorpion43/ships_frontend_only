@@ -1,5 +1,5 @@
 import FieldGenerator from "@/services/FieldGenerator"
-import { checkIsInRangeOfBoundaries, getBorderCoordinates, mergeFields } from "./utils"
+import { checkIsInRangeOfBoundaries, checkShipsAreProperlyGenerated, getBorderCoordinates, mergeFields } from "./utils"
 import Ship from "@/models/Ship"
 
 describe("utils.js", () => {
@@ -109,5 +109,56 @@ describe("utils.js", () => {
             {x: -1, y: 10}, {x: 6, y: 10},
             {x: -1, y: 11}, {x: 0, y: 11}, {x: 1, y: 11}, {x: 2, y: 11}, {x: 3, y: 11}, {x: 4, y: 11}, {x: 5, y: 11}, {x: 6, y: 11}
         ]))
+    })
+
+    it("should return true for properly generated ships", () => {
+        const ships = []
+        ships.push(new Ship([{ x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 }]))
+        ships.push(new Ship([{ x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 }]))
+        ships.push(new Ship([{ x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 }]))
+        ships.push(new Ship([{ x: 1, y: 9 }, { x: 2, y: 9 }]))
+        ships.push(new Ship([{ x: 3, y: 4 }, { x: 3, y: 5 }]))
+        ships.push(new Ship([{ x: 6, y: 3 }, { x: 6, y: 2 }]))
+        ships.push(new Ship([{ x: 6, y: 9 }]))
+        ships.push(new Ship([{ x: 1, y: 7 }]))
+        ships.push(new Ship([{ x: 1, y: 5 }]))
+        ships.push(new Ship([{ x: 1, y: 2 }]))
+
+        const isProperlyGenerated = checkShipsAreProperlyGenerated(ships, 10)
+        expect(isProperlyGenerated).toEqual(true)
+    })
+
+    it("should return false for not properly generated ships (two 1-point-size next to each other)", () => {
+        const ships = []
+        ships.push(new Ship([{ x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 }]))
+        ships.push(new Ship([{ x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 }]))
+        ships.push(new Ship([{ x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 }]))
+        ships.push(new Ship([{ x: 1, y: 9 }, { x: 2, y: 9 }]))
+        ships.push(new Ship([{ x: 3, y: 4 }, { x: 3, y: 5 }]))
+        ships.push(new Ship([{ x: 6, y: 3 }, { x: 6, y: 2 }]))
+        ships.push(new Ship([{ x: 6, y: 9 }]))
+        ships.push(new Ship([{ x: 1, y: 7 }]))
+        ships.push(new Ship([{ x: 1, y: 5 }]))
+        ships.push(new Ship([{ x: 1, y: 6 }]))
+
+        const isProperlyGenerated = checkShipsAreProperlyGenerated(ships, 10)
+        expect(isProperlyGenerated).toEqual(false)
+    })
+
+    it("should return false for not properly generated ships (all ships next to each other)", () => {
+        const ships = []
+        ships.push(new Ship([{ x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 }]))
+        ships.push(new Ship([{ x: 7, y: 9 }, { x: 7, y: 8 }, { x: 7, y: 7 }]))
+        ships.push(new Ship([{ x: 6, y: 9 }, { x: 6, y: 8 }, { x: 6, y: 7 }]))
+        ships.push(new Ship([{ x: 5, y: 9 }, { x: 5, y: 8 }]))
+        ships.push(new Ship([{ x: 4, y: 9 }, { x: 4, y: 8 }]))
+        ships.push(new Ship([{ x: 3, y: 9 }, { x: 3, y: 8 }]))
+        ships.push(new Ship([{ x: 2, y: 9 }]))
+        ships.push(new Ship([{ x: 1, y: 9 }]))
+        ships.push(new Ship([{ x: 0, y: 9 }]))
+        ships.push(new Ship([{ x: 9, y: 9 }]))
+
+        const isProperlyGenerated = checkShipsAreProperlyGenerated(ships, 10)
+        expect(isProperlyGenerated).toEqual(false)
     })
 })

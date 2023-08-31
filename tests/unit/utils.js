@@ -48,17 +48,25 @@ const getBorderCoordinates = (fields) => {
     return borderPoints
 }
 
-// const checkShipsAreProperlyGenerated = (ships) => {
-//     const isOk = true
-//     for (const index in ships) {
-//         const otherShips = ships.slice(index, 1)
-//     }
+const checkShipsAreProperlyGenerated = (ships, boardSize) => {
+    let isOk = true
+    while (ships.length > 0 && isOk) {
+        const ship = ships.shift()
+        const allFields = mergeFields(ships)
+        const borderPoints = getBorderCoordinates(ship.fields)
+        isOk = borderPoints.every(point => {
+            if (!checkIsInRangeOfBoundaries(point, boardSize)) {
+                return true
+            }
+            else {
+                const test = allFields.every(field => field.x !== point.x || field.y !== point.y)
+                return test
+            }
+        })
 
-//     return ships.every((ship, index) => {
+    }
 
-//     })
+    return isOk
+}
 
-//     return isOk
-// }
-
-export { checkIsInRangeOfBoundaries, mergeFields, getBorderCoordinates }
+export { checkIsInRangeOfBoundaries, mergeFields, getBorderCoordinates, checkShipsAreProperlyGenerated }

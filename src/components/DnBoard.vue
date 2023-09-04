@@ -1,11 +1,13 @@
 <template>
-  <div class="dn-board">
+  <div class="dn-board"
+    :class="{blocked: blocked}">
     <template v-for="h in size.height">
       <div class="dn-board__row" :key="h">
         <template v-for="w in size.width">
           <dn-field
             :key="prepareCordinates(w, h)"
-            :cordinates="prepareCordinates(w, h)"
+            :coordinates="{x: w - 1, y: h}"
+            @clicked="fieldClicked"
           />
         </template>
       </div>
@@ -13,10 +15,13 @@
   </div>
 </template>
 <script>
-import { alphabet } from "@/constants"
+import { alphabet, FIELD_BLOCK_TIME } from "@/constants"
 import DnField from './DnField.vue'
 export default {
   name: "DnBoard",
+  components: {
+    DnField
+  },
   props: {
     size: {
       type: Object,
@@ -26,12 +31,21 @@ export default {
       })
     }
   },
-  components: {
-    DnField
+  data () {
+    return {
+      blocked: false
+    }
   },
   methods: {
     prepareCordinates(w, h) {
       return `${alphabet[w-1]}${h}`
+    },
+
+    fieldClicked() {
+      this.blocked = true
+      setTimeout(() => {
+        this.blocked = false
+      }, FIELD_BLOCK_TIME)
     }
   },
 }
@@ -43,6 +57,9 @@ export default {
     width: fit-content;
     &__row {
       display: flex;
+    }
+    &.blocked {
+      pointer-events: none;
     }
   }
 </style>

@@ -6,22 +6,22 @@ describe('DnField', () => {
   it('should emit click with cordinate A1', async () => {
     const wrapper = mount(DnField, {
       propsData: {
-        cordinates: 'A1'
+        coordinates: {x: 0, y: 1}
       }
     })
 
     await wrapper.trigger('click')
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.emitted().click).toBeTruthy()
-    expect(wrapper.emitted().click.length).toBe(1)
-    expect(wrapper.emitted().click[0][0]).toBe('A1')
+    expect(wrapper.emitted().clicked).toBeTruthy()
+    expect(wrapper.emitted().clicked.length).toBe(1)
+    expect(wrapper.emitted().clicked[0][0]).toEqual({x: 0, y: 1})
   })
 
   it('should has backgrond white before click, after click yellow and after 800ms white back', async () => {
     const wrapper = mount(DnField, {
       propsData: {
-        cordinates: 'A1'
+        coordinates: {x: 0, y: 1}
       }
     })
 

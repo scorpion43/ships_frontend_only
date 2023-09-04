@@ -2,30 +2,38 @@
   <div class="dn-field"
     :class="{'just-clicked': justClicked}"
     @click="click">
-    <!-- {{ cordinates }} -->
+    <!-- {{ JSON.stringify(coordinates) }} -->
   </div>
 </template>
 <script>
+import  { FIELD_BLOCK_TIME } from '@/constants'
 export default {
   name: "DnField",
   props: {
-    cordinates: {
-      type: String,
+    coordinates: {
+      type: Object,
       required: true,
+    },
+    ships: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       justClicked: false,
+      missed: false,
+      hit: false,
+      sunk: false
     }
   },
   methods: {
     click () {
       this.justClicked = true
-      this.$emit('click', this.cordinates)
+      this.$emit('clicked', this.coordinates)
       setTimeout(() => {
         this.justClicked = false
-      }, 800)
+      }, FIELD_BLOCK_TIME)
     }
   }
 }

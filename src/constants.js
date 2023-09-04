@@ -6,4 +6,6 @@ const Directions = {
     LEFT: "LEFT" 
 }
 
-export { alphabet, Directions }
+const FIELD_BLOCK_TIME = 800
+
+export { alphabet, Directions, FIELD_BLOCK_TIME }

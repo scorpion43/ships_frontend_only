@@ -13,10 +13,6 @@ export default {
     coordinates: {
       type: Object,
       required: true,
-    },
-    ships: {
-      type: Array,
-      default: () => []
     }
   },
   data() {

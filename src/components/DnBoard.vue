@@ -29,7 +29,7 @@ export default {
         width: 10,
         height: 10
       })
-    }
+    },
   },
   data () {
     return {

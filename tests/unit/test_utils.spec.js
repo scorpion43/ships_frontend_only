@@ -1,6 +1,7 @@
 import FieldGenerator from "@/services/FieldGenerator"
 import { checkIsInRangeOfBoundaries, checkShipsAreProperlyGenerated, getBorderCoordinates, mergeFields } from "./utils"
 import Ship from "@/models/Ship"
+import { FIELD_STATE } from "@/constants"
 
 describe("utils.js", () => {
     it("should return true when points are in range for  boundaries of board", () => {
@@ -53,16 +54,16 @@ describe("utils.js", () => {
         const fields = mergeFields(ships)
 
         expect(fields).toEqual(expect.arrayContaining([
-            { x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 },
-            { x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 },
-            { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 },
-            { x: 1, y: 9 }, { x: 2, y: 9 },
-            { x: 3, y: 4 }, { x: 3, y: 5 },
-            { x: 6, y: 3 }, { x: 6, y: 2 },
-            { x: 6, y: 9 },
-            { x: 1, y: 7 },
-            { x: 1, y: 5 },
-            { x: 1, y: 2 },
+            { x: 8, y: 9, state: FIELD_STATE.CLEAR }, { x: 8, y: 8, state: FIELD_STATE.CLEAR }, { x: 8, y: 7, state: FIELD_STATE.CLEAR }, { x: 8, y: 6, state: FIELD_STATE.CLEAR },
+            { x: 8, y: 4, state: FIELD_STATE.CLEAR }, { x: 8, y: 3, state: FIELD_STATE.CLEAR }, { x: 8, y: 2, state: FIELD_STATE.CLEAR },
+            { x: 4, y: 7, state: FIELD_STATE.CLEAR }, { x: 5, y: 7, state: FIELD_STATE.CLEAR }, { x: 5, y: 7, state: FIELD_STATE.CLEAR },
+            { x: 1, y: 9, state: FIELD_STATE.CLEAR }, { x: 2, y: 9, state: FIELD_STATE.CLEAR },
+            { x: 3, y: 4, state: FIELD_STATE.CLEAR }, { x: 3, y: 5, state: FIELD_STATE.CLEAR },
+            { x: 6, y: 3, state: FIELD_STATE.CLEAR }, { x: 6, y: 2, state: FIELD_STATE.CLEAR },
+            { x: 6, y: 9, state: FIELD_STATE.CLEAR },
+            { x: 1, y: 7, state: FIELD_STATE.CLEAR },
+            { x: 1, y: 5, state: FIELD_STATE.CLEAR },
+            { x: 1, y: 2, state: FIELD_STATE.CLEAR },
         ]))
     })
 

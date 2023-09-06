@@ -8,4 +8,11 @@ const Directions = {
 
 const FIELD_BLOCK_TIME = 800
 
-export { alphabet, Directions, FIELD_BLOCK_TIME }
+const FIELD_STATE = {
+    MISSED: "missed",
+    HIT: "hit",
+    SUNK: "sunk",
+    CLEAR: "clear"
+}
+
+export { alphabet, Directions, FIELD_BLOCK_TIME, FIELD_STATE }

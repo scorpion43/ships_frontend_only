@@ -1,6 +1,15 @@
+import { FIELD_STATE } from "@/constants"
+
 class Ship {
     constructor(fields) {
-        this.fields = fields
+        this.fields = []
+        fields.forEach((point) => {
+            this.fields.push({
+                x: point.x,
+                y: point.y,
+                state: FIELD_STATE.CLEAR
+            })
+        })
         this.hitFields = []
     }
 
@@ -21,6 +30,12 @@ class Ship {
             this.hitFields.push(point)
         }
         return isHitMe
+    }
+    
+    fieldsWithoutState() {
+        return this.fields.map(field => {
+            return {x: field.x, y: field.y}
+        })
     }
 }
 

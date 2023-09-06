@@ -1,4 +1,4 @@
-import { Directions } from "@/constants"
+import { Directions, FIELD_STATE } from "@/constants"
 import ShipGenerator from "@/services/ShipsGenerator"
 import { checkShipsAreProperlyGenerated, mergeFields } from "../utils"
 
@@ -152,34 +152,34 @@ describe("ShipsGenerator", () => {
             expect(ships.length).toBe(10)
 
             expect(ships[0].fields).toEqual(expect.arrayContaining([
-                { x: 8, y: 9 }, { x: 8, y: 8 }, { x: 8, y: 7 }, { x: 8, y: 6 }
+                { x: 8, y: 9, state: FIELD_STATE.CLEAR }, { x: 8, y: 8, state: FIELD_STATE.CLEAR  }, { x: 8, y: 7, state: FIELD_STATE.CLEAR }, { x: 8, y: 6, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[1].fields).toEqual(expect.arrayContaining([
-                { x: 8, y: 4 }, { x: 8, y: 3 }, { x: 8, y: 2 }
+                { x: 8, y: 4, state: FIELD_STATE.CLEAR  }, { x: 8, y: 3, state: FIELD_STATE.CLEAR }, { x: 8, y: 2, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[2].fields).toEqual(expect.arrayContaining([
-                { x: 4, y: 7 }, { x: 5, y: 7 }, { x: 5, y: 7 }
+                { x: 4, y: 7, state: FIELD_STATE.CLEAR }, { x: 5, y: 7, state: FIELD_STATE.CLEAR }, { x: 5, y: 7, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[3].fields).toEqual(expect.arrayContaining([
-                { x: 1, y: 9 }, { x: 2, y: 9 }
+                { x: 1, y: 9, state: FIELD_STATE.CLEAR }, { x: 2, y: 9, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[4].fields).toEqual(expect.arrayContaining([
-                { x: 3, y: 4 }, { x: 3, y: 5 }
+                { x: 3, y: 4, state: FIELD_STATE.CLEAR }, { x: 3, y: 5, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[5].fields).toEqual(expect.arrayContaining([
-                { x: 6, y: 3 }, { x: 6, y: 2 }
+                { x: 6, y: 3, state: FIELD_STATE.CLEAR }, { x: 6, y: 2, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[6].fields).toEqual(expect.arrayContaining([
-                { x: 6, y: 9 }
+                { x: 6, y: 9, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[7].fields).toEqual(expect.arrayContaining([
-                { x: 1, y: 7 }
+                { x: 1, y: 7, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[8].fields).toEqual(expect.arrayContaining([
-                { x: 1, y: 5 }
+                { x: 1, y: 5, state: FIELD_STATE.CLEAR }
             ]))
             expect(ships[9].fields).toEqual(expect.arrayContaining([
-                { x: 1, y: 2 }
+                { x: 1, y: 2, state: FIELD_STATE.CLEAR }
             ]))
         })
 

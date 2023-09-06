@@ -10,33 +10,37 @@ class Ship {
                 state: FIELD_STATE.CLEAR
             })
         })
-        this.hitFields = []
     }
 
     isDead () {
-        return this.fields.length === this.hitFields.length
+        return this.fields.every(field => field.state !== FIELD_STATE.CLEAR)
     }
 
     isShotHitMe (point) {
         if (this.isDead()) {
             return false
         }
-        const hitSameFieldAgain = this.hitFields.some(sunkPoint => sunkPoint.x === point.x && sunkPoint.y === point.y)
+        const hitSameFieldAgain = this.fields.some(sunkPoint => sunkPoint.x === point.x && sunkPoint.y === point.y && sunkPoint.state === FIELD_STATE.HIT)
         if (hitSameFieldAgain) {
             return false
         }
-        const isHitMe =  this.fields.some(field => field.x === point.x && field.y === point.y)
-        if (isHitMe) {
-            this.hitFields.push(point)
+        let isHitMe = false
+        const field = this.fields.find(field => field.x === point.x && field.y === point.y)
+        if (field) {
+            isHitMe = true
+            field.state = FIELD_STATE.HIT
         }
+
         return isHitMe
     }
-    
-    fieldsWithoutState() {
-        return this.fields.map(field => {
-            return {x: field.x, y: field.y}
-        })
+
+    updateFieldsState () {
+        if (this.fields.every(field => field.state === FIELD_STATE.HIT)) {
+            this.fields.forEach(field => field.state = FIELD_STATE.SUNK)
+        }
     }
+
+    
 }
 
 export default Ship

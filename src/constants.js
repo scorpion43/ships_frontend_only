@@ -9,7 +9,6 @@ const Directions = {
 const FIELD_BLOCK_TIME = 800
 
 const FIELD_STATE = {
-    MISSED: "missed",
     HIT: "hit",
     SUNK: "sunk",
     CLEAR: "clear"

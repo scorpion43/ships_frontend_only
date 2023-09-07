@@ -19,6 +19,13 @@ export default new Vuex.Store({
             const ships = shipGenerator.generateShips()
             console.log('ships', ships)
             commit('setShips', ships)
-        }
+        },
+
+        // checkShot({commit, state}, point) {
+        //     const ship = state.ships.find(ship => ship.isShotHitMe(point))
+        //     if (ship) {
+                
+        //     }
+        // }
     }
 })

@@ -1,12 +1,20 @@
 import ShipGenerator from '@/services/ShipsGenerator'
+import Vue from 'vue'
 import Vuex from 'vuex'
+Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         ships: []
     },
     getters: {
-        getShips: (state) => state.ships
+        getShips: (state) => state.ships,
+        getFields: (state) => {
+            const fields = []
+            state.ships.forEach(ship => {
+                fields.push(...ship.fields)
+            })
+        }
     },
     mutations: {
         setShips(state, ships) {

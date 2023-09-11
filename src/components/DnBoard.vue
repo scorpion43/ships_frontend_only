@@ -30,6 +30,14 @@ export default {
         height: 10
       })
     },
+    ships: {
+      type: Array,
+      default: () => []
+    },
+    fields: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
@@ -39,6 +47,10 @@ export default {
   methods: {
     prepareCordinates(w, h) {
       return `${alphabet[w-1]}${h}`
+    },
+
+    getField(x, y) {
+      return this.fields.find(field => field.x === x && field.y === y)
     },
 
     fieldClicked() {

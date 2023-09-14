@@ -1,11 +1,14 @@
 <template>
-  <div class="dn-board"
+  <div 
+    v-if="isReady"
+    class="dn-board"
     :class="{blocked: blocked}">
     <template v-for="h in size.height">
       <div class="dn-board__row" :key="h">
         <template v-for="w in size.width">
           <dn-field
-            :key="prepareCordinates(w, h)"
+            :key="prepareCoordinates(w, h)"
+            :field="getField(w - 1, h)"
             :coordinates="{x: w - 1, y: h}"
             @clicked="fieldClicked"
           />
@@ -17,6 +20,7 @@
 <script>
 import { alphabet, FIELD_BLOCK_TIME } from "@/constants"
 import DnField from './DnField.vue'
+import { FIELD_STATE } from "@/constants"
 export default {
   name: "DnBoard",
   components: {
@@ -39,21 +43,42 @@ export default {
       default: () => []
     }
   },
+  computed: {
+    isReady () {
+      return this.ships.length > 0 && this.fields.length > 0
+    }
+  },
   data () {
     return {
       blocked: false
     }
   },
+  watch: {
+    fields: function (val) {
+      console.log('fields changed', val)
+    }
+  },
   methods: {
-    prepareCordinates(w, h) {
+    prepareCoordinates(w, h) {
       return `${alphabet[w-1]}${h}`
     },
 
     getField(x, y) {
-      return this.fields.find(field => field.x === x && field.y === y)
+      let field = this.fields.find(field => field.x === x && field.y === y)
+      if (!field) {
+        field = {
+          x: x,
+          y: y,
+          state: FIELD_STATE.CLEAR
+        }
+      }
+      return field
     },
 
-    fieldClicked() {
+    fieldClicked(field) {
+      console.log(field)
+      field.state = FIELD_STATE.CLICKED
+      console.log(field)
       this.blocked = true
       setTimeout(() => {
         this.blocked = false

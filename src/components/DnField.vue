@@ -1,8 +1,8 @@
 <template>
   <div class="dn-field"
-    :class="{'just-clicked': justClicked}"
+    :class="cssClasses"
     @click="click">
-    <!-- {{ JSON.stringify(coordinates) }} -->
+    {{ JSON.stringify(field) }}
   </div>
 </template>
 <script>
@@ -13,20 +13,30 @@ export default {
     coordinates: {
       type: Object,
       required: true,
+    },
+    field: {
+      type: Object,
+      required: false,
+    }
+  },
+  computed: {
+    cssClasses () {
+      if (this.justClicked) {
+        return "just-clicked"
+      }
+      return this.field.state.toLowerCase()
     }
   },
   data() {
     return {
       justClicked: false,
-      missed: false,
-      hit: false,
-      sunk: false
+      state: false
     }
   },
   methods: {
     click () {
       this.justClicked = true
-      this.$emit('clicked', this.coordinates)
+      this.$emit('clicked', this.field)
       setTimeout(() => {
         this.justClicked = false
       }, FIELD_BLOCK_TIME)
@@ -40,7 +50,16 @@ export default {
     height: 50px;
     border: 1px solid black;
     &.just-clicked {
+      background: black;
+    }
+    &.clicked {
+      background: green;
+    }
+    &.hit {
       background: yellow;
+    }
+    &.sunk {
+      background: red;
     }
   }
 </style>

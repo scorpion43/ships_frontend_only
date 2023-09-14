@@ -9,9 +9,10 @@ const Directions = {
 const FIELD_BLOCK_TIME = 800
 
 const FIELD_STATE = {
-    HIT: "hit",
-    SUNK: "sunk",
-    CLEAR: "clear"
+    CLICKED: "CLICKED",
+    HIT: "HIT",
+    SUNK: "SUNK",
+    CLEAR: "CLEAR"
 }
 
 export { alphabet, Directions, FIELD_BLOCK_TIME, FIELD_STATE }

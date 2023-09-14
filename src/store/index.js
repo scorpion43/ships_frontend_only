@@ -1,3 +1,4 @@
+import { FIELD_STATE } from '@/constants'
 import ShipGenerator from '@/services/ShipsGenerator'
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -14,6 +15,9 @@ export default new Vuex.Store({
             state.ships.forEach(ship => {
                 fields.push(...ship.fields)
             })
+            const result = fields.map((item) => Object.assign(item, {state: FIELD_STATE.CLICKED}))
+            console.log('result', result)
+            return result
         }
     },
     mutations: {
